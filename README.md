@@ -26,57 +26,132 @@ Steps:
 ## Genome segmentation
 
 ## DMB calling
-
-## DMB analysis
 dmr15 - change back to delta_means=0.01 for all, including cirrhosis + pancreatitis
 
 ## Gene expression prediction
 
-## Code for figures
-Fig. 1.
 
-Fig. 2. Differentially modified blocks of 5mC and 5hmC are associated with tissue-specific gene expression.  
+## Code for figures
+**Fig. 1.** Atlas of methylation and hydroxymethylation.  
+A. Schematic plot(BioRender)  
+B. overall methylation level  
+`fig1.r`  
+C. IGV snapshot  
+D. clustering for top10 varied  
+`fig1.r`  
+
+**Fig. 2.** Differentially modified blocks of 5mC and 5hmC are associated with tissue-specific gene expression.  
 A. Heatmap  
 `dmb_downstream_analysis.r`  
 B. DMB number  
 `dmb_downstream_analysis.r`  
-C. DMB vs. gene enrich   
+C. DMB vs. gene enrich  
 `dmb_downstream_analysis.r`  
 
-Fig. 3. D(h)MBs of normal tissues and blood cells mark regulatory regions.  
+**Fig. 3.** D(h)MBs of normal tissues and blood cells mark regulatory regions.  
 A-B. Histone  
 `heatlhy_dmb_validation.sh`  
 `blocks_analysis_histone_deeptools.r`  
 C. ATAC-seq  
 `atac_seq.sh`  
 `dmb_downstream_analysis.r`  
-D. Motif
-``
-``
+D. Motif  
+`heatlhy_dmb_validation.sh`  
+`plot_motif_enrich.r`  
+E. Plot mC / hmC DMB around tissue specific genes  
+`compare_mC_hmC.r`  
+F. Strand bias   
+`plot_strand_bias_new.r`  
 
-Fig. 4. Tumours gain unique signatures of 5mC and 5hmC.
+**Fig. 4.** Tumours gain unique signatures of 5mC and 5hmC.
 A. Heatmap 
 `dmb_downstream_analysis.r`  
 B. DMB vs. gene enrich   
 `dmb_downstream_analysis.r`  
 C. ATAC-seq  
 `atac_seq.sh`  
-`dmb_downstream_analysis.r` 
+`dmb_downstream_analysis.r`  
 
-Fig. 5. 5mC and 5hmC levels predict gene expression. 
+**Fig. 5.** 5mC and 5hmC levels predict gene expression.  
+`fig5.r`
 
+**Fig S1**  
+ichorCNA  
+`SI_plots.r`  
 
-Fig S1  
-Fig S2  
+**Fig S2**  
+Provided by collaborators  
+Beibei Wang & Yanchun Peng :A  
+Natalie J. Jooss: B-C  
 
-Fig S5
+**Fig S3**  
+QC  
+`SI_plots.r`  
+
+**Fig S4**  
+Umap & tSNE  
+`fig1.r`  
+
+**Fig S5**  
 Heatmap  
 `dmb_downstream_analysis.r`  
 
-Fig S14.
-Heatmap 
+**Fig S6**  
+Heatmap  
+`compare_mC_hmC.r`  
+
+**Fig S7**
+Heatmap  
+`compare_mC_hmC.r`  
+
+**Fig S8**  
+Feature enrichment   
 `dmb_downstream_analysis.r`  
 
-Fig S16.
+**Fig S9**  
+Histone  
+`heatlhy_dmb_validation.sh`  
+`blocks_analysis_histone_deeptools.r`  
+
+**Fig S10**  
+Histone  
+`heatlhy_dmb_validation.sh`  
+`blocks_analysis_histone_deeptools.r`  
+
+**Fig S11**  
+Histone  
+`heatlhy_dmb_validation.sh`  
+`blocks_analysis_histone_deeptools.r`  
+
+**Fig S12**  
+ATAC-seq  
+`atac_seq.sh`  
+`dmb_downstream_analysis.r`  
+
+**Fig S13**  
+Strand bias   
+`plot_strand_bias_new.r`  
+
+**Fig S14**  
 Heatmap  
 `dmb_downstream_analysis.r`  
+
+**Fig S15**  
+Feature enrichment   
+`dmb_downstream_analysis.r`  
+
+**Fig S16**
+Heatmap  
+`dmb_downstream_analysis.r`  
+
+**Fig S17**  
+ATAC-seq  
+`atac_seq.sh`  
+`dmb_downstream_analysis.r`  
+
+**Fig S18**  
+Feature enrichment   
+`dmb_downstream_analysis.r`  
+
+**Fig 19**  
+`fig5.r`
