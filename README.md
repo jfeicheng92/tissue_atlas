@@ -24,16 +24,18 @@ Steps:
 * Call methylation with MethylDackel
 
 ## Genome segmentation
+[Link](https://github.com/fojackson8/tissue_atlas/tree/main/felix_code_final/segment)
 
 ## DMB calling
-dmr15 - change back to delta_means=0.01 for all, including cirrhosis + pancreatitis
+dmr15 - change back to delta_means=0.01 for all, including cirrhosis + pancreatitis  
+[Link](https://github.com/fojackson8/tissue_atlas/tree/main/felix_code_final/dmr)
 
 ## Gene expression prediction
-
+[Link](https://github.com/fojackson8/tissue_atlas/tree/main/felix_code_final/predict_ge)
 
 ## Code for figures
 **Fig. 1.** Atlas of methylation and hydroxymethylation.  
-A. Schematic plot(BioRender)  
+A. Schematic plot (BioRender)  
 B. overall methylation level  
 `fig1.r`  
 C. IGV snapshot  
