@@ -20,9 +20,7 @@ Affiliations:
 <sup>†</sup>Corresponding author. E-mail: chunxiao.song@ludwig.ox.ac.uk    
    
 ## data pre-processing  
-https://bitbucket.org/bsblabludwig/nxf_workflows/src/master/ramess/CAPS_tissue_map/  
-https://bitbucket.org/bsblabludwig/nxf_workflows/src/master/ramess/TAPSbeta_tissue_map/  
-  
+ 
 Steps:  
 * Trim reads with Trim Galore  
 * Align reads with bwa-mem2  
