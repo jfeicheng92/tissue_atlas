@@ -1,0 +1,11 @@
+SI_plots.r
+atac_seq.sh
+blocks_analysis_histone_deeptools.r
+compare_mC_hmC.r
+dmb_downstream_analysis.r
+dmr_call.py
+fig1.r
+fig5.r
+heatlhy_dmb_validation.sh
+plot_motif_enrich.r
+plot_strand_bias_new.r

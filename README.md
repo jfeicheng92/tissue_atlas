@@ -1,19 +1,25 @@
-# A methylation and hydroxymethylation atlas of normal and tumour tissues 
-Authors: Masato Inoue<sup>1,2,9</sup>, Jingfei Cheng<sup>1,2,9</sup>, Felix Jackson<sup>1,2,3,9</sup>, Jinfeng Chen<sup>1,2,9,10</sup>, Haiqi Xu<sup>1,2</sup>, Beibei Wang<sup>4</sup>, Yanchun Peng<sup>4,5</sup>, Natalie J. Jooss<sup>6</sup>, Bob Amess<sup>1</sup>, Yibin Liu<sup>7,8</sup>, Benjamin Schuster-Böckler<sup>1</sup>, Bethan Psaila<sup>6</sup>, Tao Dong<sup>4,5</sup>, Chun-Xiao Song<sup>1,2,†</sup>  
+# A Tri-level methylation atlas of normal and tumour tissues
+Authors: Jingfei Cheng<sup>1,2,15</sup> , Masato Inoue<sup>1,2,15</sup> , Jinfeng Chen<sup>3,4,5,15</sup> , Ella Mi<sup>1,2,15</sup> , Felix Jackson<sup>1,2,6,15</sup> , Haiqi Xu<sup>1,2</sup> , Beibei Wang<sup>7</sup> , Yanchun Peng<sup>7,8</sup> , Rory Peters<sup>9</sup> , Sakineh Hussainy<sup>1,2</sup> , Natalie J. Jooss<sup>10</sup> , Bob Amess<sup>1</sup> , Yibin Liu<sup>11,12</sup> , Benjamin Schuster-Böckler<sup>1</sup> , Bethan Psaila<sup>10</sup> , Shivan Sivakumar<sup>13</sup> , Eleanor Barnes<sup>9</sup> , Brian D Nicholson<sup>14</sup> , Tao Dong<sup>7,8</sup> , Chun-Xiao Song<sup>1,2,†</sup> 
+
 Affiliations:  
-<sup>1</sup>Ludwig Institute for Cancer Research, Nufﬁeld Department of Medicine, University of Oxford, Oxford, UK  
-<sup>2</sup>Target Discovery Institute, Nufﬁeld Department of Medicine, University of Oxford, Oxford, UK  
-<sup>3</sup>Department of Computer Science, University of Oxford, Oxford, UK  
-<sup>4</sup>Chinese Academy of Medical Sciences (CAMS) Oxford Institute (COI), University of Oxford, Oxford, UK  
-<sup>5</sup>MRC Translational Immune Discovery Unit, MRC Weatherall Institute of Molecular Medicine, University of Oxford, Oxford, UK  
-<sup>6</sup>MRC Weatherall Institute of Molecular Medicine, Radcliffe Department of Medicine and National Institute of Health Research, Oxford Biomedical Research Centre, University of Oxford, Oxford, UK  
-<sup>7</sup>College of Chemistry and Molecular Sciences, Wuhan University, Wuhan, China  
-<sup>8</sup>Taikang Center for Life and Medical Sciences, Wuhan University, Wuhan, China  
-<sup>9</sup>These authors contributed equally to this work  
-<sup>10</sup>Present address: CAS Key Laboratory of Genome Sciences and Information, Beijing Institute of Genomics, Chinese Academy of Sciences and China National Center for Bioinformation, Beijing 100101, China  
-<sup>†</sup>Corresponding author. E-mail: chunxiao.song@ludwig.ox.ac.uk
+<sup>1</sup> Ludwig Institute for Cancer Research, Nufﬁeld Department of Medicine, University of Oxford, Oxford, UK  
+<sup>2</sup> Target Discovery Institute, Nufﬁeld Department of Medicine, University of Oxford, Oxford, UK 
+<sup>3</sup> China National Center for Bioinformation, Beijing 100101, China 
+<sup>4</sup> Beijing Institute of Genomics, Chinese Academy of Sciences, Beijing 100101, China 
+<sup>5</sup> University of Chinese Academy of Sciences, Beijing 100049, China 
+<sup>6</sup> Department of Computer Science, University of Oxford, Oxford, UK 
+<sup>7</sup> Chinese Academy of Medical Sciences (CAMS) Oxford Institute (COI), University of Oxford, Oxford, UK  
+<sup>8</sup> MRC Translational Immune Discovery Unit, MRC Weatherall Institute of Molecular Medicine, University of Oxford, Oxford, UK 
+<sup>9</sup> Oxford University Hospital, Oxford, United Kingdom 
+<sup>10</sup> MRC Weatherall Institute of Molecular Medicine, Radcliffe Department of Medicine and National Institute of Health Research, Oxford Biomedical Research Centre, University of Oxford, Oxford, UK 
+<sup>11</sup> College of Chemistry and Molecular Sciences, Wuhan University, Wuhan, China 
+<sup>12</sup> Taikang Center for Life and Medical Sciences, Wuhan University, Wuhan, China 
+<sup>13</sup> Department of Immunology and Immunotherapy, School of Infection, Inflammation and Immunology, College of Medicine and Health, University of Birmingham, Birmingham B15 2TT, UK. 
+<sup>14</sup>Nuffield Department of Primary Care Health Sciences, University of Oxford, Oxford OX2 6GG, UK 
+<sup>15</sup>These authors contributed equally to this work. 
+<sup>†</sup>Corresponding author. E-mail: chunxiao.song@ludwig.ox.ac.uk  
  
-## data preprocessing
+## data pre-processing
 https://bitbucket.org/bsblabludwig/nxf_workflows/src/master/ramess/CAPS_tissue_map/
 https://bitbucket.org/bsblabludwig/nxf_workflows/src/master/ramess/TAPSbeta_tissue_map/
 
@@ -22,138 +28,84 @@ Steps:
 * Align reads with bwa-mem2
 * Mark duplicate reads with Picard MarkDuplicates
 * Call methylation with MethylDackel
-
-## Genome segmentation
-[Link](https://github.com/fojackson8/tissue_atlas/tree/main/felix_code_final/segment)
+* MLML was used to integrated 5mC and 5hmC to obtain tri-level cytosine estimates (5umC, 5mC, 5hmC)
 
 ## DMB calling
-dmr15 - change back to delta_means=0.01 for all, including cirrhosis + pancreatitis  
-[Link](https://github.com/fojackson8/tissue_atlas/tree/main/felix_code_final/dmr)
-
-## Gene expression prediction
-[Link](https://github.com/fojackson8/tissue_atlas/tree/main/felix_code_final/predict_ge)
+dmr_call.py
+```bash
+methratio=all_sample.merged.mlml.mincov10_common.groupby.hg38_ws1000.s500.bed
+for c in mC umC hmC
+do
+python dmr_call.py --in_file $methratio  --tg_quant 0.25 --bg_quant_hypo 0.05 --bg_quant_hyper 0.05 --bg_quant_mode groups --top_n 2000 --libs $c >dmr_call_bg_quant0.05.${c}.log 2>&1 
+done
+```
 
 ## Code for figures
-**Fig. 1.** Atlas of methylation and hydroxymethylation.  
-A. Schematic plot (BioRender)  
-B. overall methylation level  
-`fig1.r`  
-C. IGV snapshot  
-D. clustering for top10 varied  
-`fig1.r`  
+**Fig. 1.** Tri-level DNA Methylation Atlas.  
+A-B. Schematic plot (BioRender)  
+C. Whole-genome average levels of 5mC, 5hmC, and 5umC across all samples 
+`ternary_plot.r`  
+D. Differences in whole-genome cytosine modification levels between tumour - normal pairs 
+`ternary_plot.r`  
 
-**Fig. 2.** Differentially modified blocks of 5mC and 5hmC are associated with tissue-specific gene expression.  
-A. Heatmap  
-`dmb_downstream_analysis.r`  
-B. DMB number  
-`dmb_downstream_analysis.r`  
-C. DMB vs. gene enrich  
-`dmb_downstream_analysis.r`  
+**Fig. 2.** Genomic distribution of 5uC, 5hmC and 5mC.  
+A. Feature enrichment analysis of genomic regions with maximal modification levels (top 0.5%)  
+`high_mod.r`  
+B. Average tri-level methylation profiles (5umC, 5hmC, 5mC) in 1kb bins at example tissue-specific genes  
+`stacked_bar_igv.r`  
+C. Hierarchical clustering of normal samples based on the top 0.5% most variable 
+`top_var.r`  
 
-**Fig. 3.** D(h)MBs of normal tissues and blood cells mark regulatory regions.  
-A-B. Histone  
-`heatlhy_dmb_validation.sh`  
-`blocks_analysis_histone_deeptools.r`  
-C. ATAC-seq  
-`atac_seq.sh`  
-`dmb_downstream_analysis.r`  
-D. Motif  
-`heatlhy_dmb_validation.sh`  
-`plot_motif_enrich.r`  
-E. Plot mC / hmC DMB around tissue specific genes  
-`compare_mC_hmC.r`  
-F. Strand bias   
-`plot_strand_bias_new.r`  
+**Fig. 3.** Tissue specific DMRs marked spatially distinct regions.  
+A. Pairwise correlations between 5umC, 5hmC, and 5mC  
+B. Proportion of hyper- and hypo-DMRs  
+C. Heatmap of the top 200 tissue-specific DMRs  
+D. Venn diagrams showing overlap between the top 1,000 tissue-specific DMRs  
+E. Boxplots showing the percentage of top 1,000 tissue-specific DMRs in another context  
+`tissue_specific_dmr_1kb.r`  
 
-**Fig. 4.** Tumours gain unique signatures of 5mC and 5hmC.
-A. Heatmap 
-`dmb_downstream_analysis.r`  
-B. DMB vs. gene enrich   
-`dmb_downstream_analysis.r`  
-C. ATAC-seq  
-`atac_seq.sh`  
-`dmb_downstream_analysis.r`  
 
-**Fig. 5.** 5mC and 5hmC levels predict gene expression.  
-`fig5.r`
+**Fig. 4.**  5(u)mC and 5hmC marked tissue specific enhancers.  
+A-B. ChIP-seq signals aligned with tissue specific DMRs  
+`tissue_specific_dmr_1kb_histone.r`  
+C. ATAC-seq within hypo-5mC and hyper-5hmC DMRs  
+`tissue_specific_dmr_1kb_atac-seq.r`  
+D. Enriched sequence motifs
+`tissue_specific_dmr_1kb_motif.r`  
+E. Schematic plot (BioRender)  
 
-**Fig S1**  
-ichorCNA  
-`SI_plots.r`  
+**Fig. 5.** Relationship between tissue-specific DMRs and gene expression.  
+A. Distribution of DNA modifications across gene bodies and ±10 kb flanking regions  
+`meth_vs_gene_expression_bins_quantiles.r`  
+B. Enrichment of genes proximal to tissue-specific DMRs among tissue-specific gene sets  
+`tissue_specific_dmr_1kb_gene_expr.r`  
+C. Heatmap showing scaled average expression of genes associated with tissue-specific DMRs
+`tissue_specific_dmr_1kb_gene_expr.r`  
+D. Spatial distribution of DMRs  
+`tumour_specific_dmr_1kb_gene_expr_test.r`
+E. Pearson correlation between predicted and observed gene expression levels   
+`Gene_expression_prediction.ipynb`
+`gene_expr_predict.r`
 
-**Fig S2**  
-Provided by collaborators  
-Beibei Wang & Yanchun Peng :A  
-Natalie J. Jooss: B-C  
+**Fig. 6.** Integrated analysis of tumour type-specific DMRs. 
+A. Overall methylation difference between tumour - normal pairs  
+`tumour_meth_1kb.r`  
+B. Heatmap of the top 200 tumour-specific DMRs  
+`tumour_specific_dmr_1kb.r`
+C. Enrichment analysis of tumour-specific DMRs against tumour type-specific genes
+`tumour_gene.r`
+`tumour_specific_dmr_1kb_gene_expr_test.r`
+D. ATAC-seq within hypo-5mC and hyper-5hmC DMRs
+`tissue_specific_dmr_1kb_atac-seq.r` 
+E. Motif enrichment analysis of tumour-specific DMRs
+`tissue_specific_dmr_1kb_motif.r`
+F. Enrichment analysis of tumour DMRs at cancer GWAS loci
+`gwas.sh`
+`gwas_plot.r`
 
-**Fig S3**  
-QC  
-`SI_plots.r`  
+**Fig. 7.** Comparison of tissue deconvolution using TAPS and CAPS+ Atlases
+`tissue_deconvolution_CAPS.ipynb`
+`tissue_deconvolution_TAPS.ipynb`
+`tissue_deconvolution.r`
 
-**Fig S4**  
-Umap & tSNE  
-`fig1.r`  
 
-**Fig S5**  
-Heatmap  
-`dmb_downstream_analysis.r`  
-
-**Fig S6**  
-Heatmap  
-`compare_mC_hmC.r`  
-
-**Fig S7**
-Heatmap  
-`compare_mC_hmC.r`  
-
-**Fig S8**  
-Feature enrichment   
-`dmb_downstream_analysis.r`  
-
-**Fig S9**  
-Histone  
-`heatlhy_dmb_validation.sh`  
-`blocks_analysis_histone_deeptools.r`  
-
-**Fig S10**  
-Histone  
-`heatlhy_dmb_validation.sh`  
-`blocks_analysis_histone_deeptools.r`  
-
-**Fig S11**  
-Histone  
-`heatlhy_dmb_validation.sh`  
-`blocks_analysis_histone_deeptools.r`  
-
-**Fig S12**  
-ATAC-seq  
-`atac_seq.sh`  
-`dmb_downstream_analysis.r`  
-
-**Fig S13**  
-Strand bias   
-`plot_strand_bias_new.r`  
-
-**Fig S14**  
-Heatmap  
-`dmb_downstream_analysis.r`  
-
-**Fig S15**  
-Feature enrichment   
-`dmb_downstream_analysis.r`  
-
-**Fig S16**
-Heatmap  
-`dmb_downstream_analysis.r`  
-
-**Fig S17**  
-ATAC-seq  
-`atac_seq.sh`  
-`dmb_downstream_analysis.r`  
-
-**Fig S18**  
-Feature enrichment   
-`dmb_downstream_analysis.r`  
-
-**Fig 19**  
-`fig5.r`
